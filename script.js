@@ -84,10 +84,37 @@ function handleYesClick() {
     // Optional: Redirect to yes_page
     window.location.href = "yes_page.html";
 
-    // Notify backend
-    fetch('http://localhost:3000/notify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Someone clicked YES!' })
+    // Notify const express = require('express');
+const http = require('http');
+const WebSocket = require('ws');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+let clients = [];
+
+wss.on('connection', (ws) => {
+    clients.push(ws);
+    ws.on('close', () => {
+        clients = clients.filter(client => client !== ws);
     });
-}
+});
+
+app.post('/notify', (req, res) => {
+    const message = req.body.message || 'Someone clicked YES!';
+    clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+        }
+    });
+    res.sendStatus(200);
+});
+
+server.listen(10000, () => {
+    console.log('Server running on port 10000');
+});
