@@ -83,7 +83,10 @@ function handleYesClick() {
 function handleYesClick() {
     // Optional: Redirect to yes_page
     window.location.href = "yes_page.html";
-
+ 
+    fetch('https://valentine-notifier.onrender.com/notify', {
+        method: 'POST',
+        headers: {
     // Notify const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
