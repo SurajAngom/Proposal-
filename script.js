@@ -79,4 +79,15 @@ function handleNoClick() {
 
 function handleYesClick() {
     window.location.href = "yes_page.html";
+} 
+function handleYesClick() {
+    // Optional: Redirect to yes_page
+    window.location.href = "yes_page.html";
+
+    // Notify backend
+    fetch('http://localhost:3000/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Someone clicked YES!' })
+    });
 }
