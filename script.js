@@ -79,7 +79,4 @@ function handleNoClick() {
 
 function handleYesClick() {
     window.location.href = "yes_page.html";
-} 
-function handleYesClick() {
-    // Optional: Redirect to yes_page
-    window.location.href = "yes_page.html";
+}
